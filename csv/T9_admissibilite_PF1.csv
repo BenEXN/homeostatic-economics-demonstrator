@@ -1,0 +1,6 @@
+scenario,perimetre_PF1,F1_continuite,F3prime_via_invariance_forte,F4_beta_pos,L_lipschitz_S,Phi_dans_P_Phi,D1_D4_lambdaM,ebase_r,P_borne_M,u_max,u_unsat_pct,delta=min_IED
+A_reference,τ=0 : oui,True,True,True,True,True,True,e_base≡1 ; r≡0,True,1.0,0.0,1.3608
+B_approche_seuil,τ=0 : oui,True,True,True,True,True,True,e_base≡1 ; r≡0,True,1.0,100.0,0.3182
+C_sortie_K,τ=0 : oui,True,True,True,True,True,True,e_base≡1 ; r≡0,True,1.0,100.0,0.2746
+E_delai,τ>0 : hors périmètre EDO (C2/P-F2),True,True,True,True,True,True,e_base≡1 ; r≡0,True,1.0,100.0,0.4327
+F_acces_Zcible,τ=0 : oui,True,True,True,True,True,True,e_base≡1 ; r≡0,True,1.0,49.5,0.5485

@@ -1,0 +1,6 @@
+IRNR0,IED0,IED_min,IED_final,observation
+1.5,1.5000,1.2784,1.2784,-
+1.0,1.3104,1.2762,1.2782,-
+0.5,1.0400,1.0400,1.2780,IED0 abaissé puis remonte (pas de chute dynamique)
+0.2,0.7663,0.7663,1.2777,IED0 abaissé puis remonte (pas de chute dynamique)
+0.05,0.4827,0.4827,1.2770,IED0 abaissé puis remonte (pas de chute dynamique)

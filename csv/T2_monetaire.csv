@@ -1,0 +1,6 @@
+scenario,lambda,q_T,M(70),M_star_T,flux_rel(90-100%),flux_stabilise(<1e-3),origine_stabilisation,u_unsat_pct,"borne_max(M0,1/lambda)",borne_respectee
+A_reference,0.12,1.0000,8.332,8.333,0.000e+00,True,saturation u=1,0.0,8.333,True
+B_approche_seuil,0.15,0.3182,2.148,2.121,1.060e-02,False,-,100.0,6.667,True
+C_sortie_K,0.15,0.2746,1.853,1.831,9.520e-03,False,-,100.0,6.667,True
+E_delai,0.15,0.5727,3.732,3.818,2.318e-02,False,-,100.0,6.667,True
+F_acces_Zcible,0.82,1.0000,1.220,1.220,0.000e+00,True,saturation u=1,49.5,1.220,True

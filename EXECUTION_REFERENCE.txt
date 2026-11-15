@@ -1,0 +1,26 @@
+Paquet reproductible — démonstrateur EH V1.1
+Auteur : Benjamin Albouy
+Rattachement : programme de recherche « Économie homéostatique »
+Documents de référence : Working Paper EH V1.0 (novembre 2026) ; note de cadrage P-F1 V1 (novembre 2026).
+CSV et figures générés par une exécution unique du moteur figé, sans retouche postérieure.
+
+Python : 3.12.3
+matplotlib : 3.10.8
+Commande : python3 eh_reproductible.py
+SHA-256 moteur : ffc2339bcb2b61adb5a0c71f6d30f063636d1015a3db547e36e7bd62f89bd9b5
+Résultat : exécution réussie ; 10 CSV ; 16 figures (8 PNG 300 dpi + 8 PDF vectoriels).
+Les fichiers d'accompagnement et le manifeste sont assemblés après cette exécution.
+
+Script de contrôle d'ordre supérieur (controle/controle_ordre_superieur.py) : Python 3.12.3, numpy 2.5.4, scipy 1.18.1 ; sortie dans controle/sortie_attendue.txt.
+Tests (tests/tests_moteur.py, tests/test_non_regression.py) : Python 3.12.3 ; sorties dans tests/.
+
+Révision V1.1 du 12 novembre 2026 : contrôles préalables étendus (valeurs finies, horizon strictement positif, T et τ multiples entiers de Δt) ; pas significatif du détecteur défini par |m_k| ≥ θ ; valeurs de T8 calculées ; encart du panneau A de la figure 6 déplacé ; en-tête du moteur (dates des documents de référence, dépendances) ; ajout du script de contrôle, des tests, de README.md et de CHANGELOG_V1.1.md.
+Révision du 13 novembre 2026, après contre-expertise : régime du flux terminal (critère relatif pour q(T) > 0, flux nul constant, extinction) ; horizon d'au moins un intervalle et retard strictement positif d'au moins un pas ; point fixe encadré sur [0, 1e-4] lorsque le balayage ne détecte aucun changement de signe, contrôle du résidu ; script de contrôle : paramètres retranscrits de l'article, événements de la zone cible complète ; tests portés de 87 à 111.
+Exécution rejouée avec le moteur V1.1 (Python 3.12.3, matplotlib 3.10.8) : les dix CSV, le journal d'exécution et les figures 1 à 5, S1 et S2 (PNG et PDF) sont octet-identiques à ceux de la V1 ; la figure 6 est régénérée.
+
+Historique de la V1
+Révision du 28 septembre 2026 : définition de la sortie de K étendue aux trajectoires issues de l'extérieur de K (exit_t = première transition de K vers son extérieur ; ajout de init_in_k et k_first_entry_t).
+Révision du 5 octobre 2026 : libellé de l'axe de la masse monétaire des figures 3 et 6, « M (non tronqué) », et commentaire d'en-tête du moteur alignés.
+Révision du 7 octobre 2026 : vocabulaire du moteur et des figures aligné sur le Working Paper V1.0, la note de cadrage P-F1 V1 et l'article ; figures 3 et S2 renommées figure_03_geometrie_K_Zcible et figure_S2_beta_Zcible.
+Révision du 7 octobre 2026 (site V0.100) : en-tête du moteur et documents de référence datés d'octobre 2026.
+SHA-256 du moteur V1 : 7a81d614ba4efcb6bffafffd37e490fa2475f1a9811577676109619560d5d15b

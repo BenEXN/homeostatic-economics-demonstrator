@@ -1,0 +1,221 @@
+== 1. Scénario A — formule fermée du schéma d'Euler (u = 1 sur tout l'horizon)
+[CONFORME] A : coefficient de régulation saturé à chaque état
+      1401 états
+[CONFORME] A : moteur contre S_k = S* + (S_0 − S*)(1 − αΔt)^k et M_k = 1/λ + (M_0 − 1/λ)(1 − λΔt)^k
+      écart maximal sur 1 401 états : IED 1.1e-15 ; M 1.2e-14 (tolérance 1e-12)
+[CONFORME] N + 1 = 1 401 états, t_0 = 0, t_N = 70
+== 2. Métriques de Z_cible sur des suites construites à la main (Δt = 0,5)
+[CONFORME] Z_cible : jamais dans la zone
+      attendu {'n_entries': 0, 'first_entry_t': None, 'last_exit_t': None, 'longest_stay': 0.0} ; obtenu {'n_entries': 0, 'first_entry_t': None, 'last_exit_t': None, 'longest_stay': 0.0}
+[CONFORME] Z_cible : occupation initiale sans entrée dynamique
+      attendu {'n_entries': 0, 'first_entry_t': None, 'last_exit_t': None, 'longest_stay': 1.5} ; obtenu {'n_entries': 0, 'first_entry_t': None, 'last_exit_t': None, 'longest_stay': 1.5}
+[CONFORME] Z_cible : occupation initiale puis sortie
+      attendu {'n_entries': 0, 'first_entry_t': None, 'last_exit_t': 1.0, 'longest_stay': 0.5} ; obtenu {'n_entries': 0, 'first_entry_t': None, 'last_exit_t': 1.0, 'longest_stay': 0.5}
+[CONFORME] Z_cible : une entrée, pas de sortie
+      attendu {'n_entries': 1, 'first_entry_t': 1.0, 'last_exit_t': None, 'longest_stay': 1.0} ; obtenu {'n_entries': 1, 'first_entry_t': 1.0, 'last_exit_t': None, 'longest_stay': 1.0}
+[CONFORME] Z_cible : deux séjours, le second plus long
+      attendu {'n_entries': 2, 'first_entry_t': 0.5, 'last_exit_t': 3.0, 'longest_stay': 1.0} ; obtenu {'n_entries': 2, 'first_entry_t': 0.5, 'last_exit_t': 3.0, 'longest_stay': 1.0}
+[CONFORME] Z_cible : état isolé dans la zone
+      attendu {'n_entries': 1, 'first_entry_t': 1.0, 'last_exit_t': 1.5, 'longest_stay': 0.0} ; obtenu {'n_entries': 1, 'first_entry_t': 1.0, 'last_exit_t': 1.5, 'longest_stay': 0.0}
+[CONFORME] Z_cible : entrée au dernier état
+      attendu {'n_entries': 1, 'first_entry_t': 1.5, 'last_exit_t': None, 'longest_stay': 0.0} ; obtenu {'n_entries': 1, 'first_entry_t': 1.5, 'last_exit_t': None, 'longest_stay': 0.0}
+== 3. Détecteur de retournements sur des trajectoires analytiques (Δt = 0,05, T = 70)
+[CONFORME] détecteur : constante
+      attendu 0 retournement(s), oscillation = False ; obtenu 0, False
+[CONFORME] détecteur : rampe croissante
+      attendu 0 retournement(s), oscillation = False ; obtenu 0, False
+[CONFORME] détecteur : relaxation exponentielle
+      attendu 0 retournement(s), oscillation = False ; obtenu 0, False
+[CONFORME] détecteur : un seul maximum (parabole)
+      attendu 1 retournement(s), oscillation = False ; obtenu 1, False
+[CONFORME] détecteur : sinus d'amplitude 0,1 et de période 20 (7 extremums)
+      attendu 7 retournement(s), oscillation = True ; obtenu 7, True
+[CONFORME] détecteur : pentes de valeur absolue exactement égale à θ (pas significatif si |m_k| ≥ θ)
+      attendu 3 retournements ; obtenu 3
+== 4. Contrôles préalables (attendu : refus avec message explicite)
+[CONFORME] refus : α = 0
+      ValueError : Paramètres invalides : alpha=0.0, beta=0.18, lambda=0.12, tau=0
+[CONFORME] refus : α < 0
+      ValueError : Paramètres invalides : alpha=-0.1, beta=0.18, lambda=0.12, tau=0
+[CONFORME] refus : β < 0
+      ValueError : Paramètres invalides : alpha=0.1, beta=-0.01, lambda=0.12, tau=0
+[CONFORME] refus : λ = 0
+      ValueError : Paramètres invalides : alpha=0.1, beta=0.18, lambda=0.0, tau=0
+[CONFORME] refus : τ < 0
+      ValueError : Paramètres invalides : alpha=0.1, beta=0.18, lambda=0.12, tau=-1
+[CONFORME] refus : β + γ_1 > 2α (β = 0,19 pour α = 0,10)
+      ValueError : Paramètres incompatibles avec l'invariance de [0,2]^3 : composante 1, F_i(2,u=1)
+[CONFORME] refus : S_0 hors de [0,2]³ (IBD_0 = 2,1)
+      ValueError : Condition initiale S0 hors [0,2]^3 : (2.1, 1.4, 1.2)
+[CONFORME] refus : S_0 négatif
+      ValueError : Condition initiale S0 hors [0,2]^3 : (1.5, -0.1, 1.2)
+[CONFORME] refus : M_0 < 0
+      ValueError : Condition initiale M0 négative : -0.5
+[CONFORME] refus : α_3 Δt > 1 (Δt = 8)
+      ValueError : Pas trop grand pour préserver [0,2] par Euler : alpha_i*dt=1.04 (composante 3).
+[CONFORME] refus : λ Δt > 1 (λ = 0,82 ; Δt = 1,3)
+      ValueError : Pas trop grand pour préserver M>=0 par Euler : lambda*dt=1.066
+[CONFORME] refus : Δt = 0
+      ValueError : Pas de temps non positif : 0.0
+[CONFORME] refus : Δt < 0
+      ValueError : Pas de temps non positif : -0.05
+[CONFORME] refus : Δt non fini
+      ValueError : Pas de temps non fini : nan
+[CONFORME] refus : T = 0
+      ValueError : Horizon non fini ou non positif : 0.0
+[CONFORME] refus : T < 0
+      ValueError : Horizon non fini ou non positif : -5.0
+[CONFORME] refus : T non fini
+      ValueError : Horizon non fini ou non positif : inf
+[CONFORME] refus : T/Δt non entier (Δt = 0,03 ; T = 70)
+      ValueError : T/dt = 2333.3333333333335 n'est pas entier : choisir un pas diviseur de T (aucun
+[CONFORME] refus : τ/Δt non entier (τ = 0,125 ; Δt = 0,05)
+      ValueError : tau/dt = 2.5 n'est pas entier : choisir un pas diviseur de tau (aucun arrondi si
+[CONFORME] refus : τ/Δt non entier (τ = 10 ; Δt = 0,07)
+      ValueError : tau/dt = 142.85714285714283 n'est pas entier : choisir un pas diviseur de tau (a
+[CONFORME] refus : alpha = NaN
+      ValueError : Paramètre non fini : alpha=nan
+[CONFORME] refus : alpha = +∞
+      ValueError : Paramètre non fini : alpha=inf
+[CONFORME] refus : beta = NaN
+      ValueError : Paramètre non fini : beta=nan
+[CONFORME] refus : beta = +∞
+      ValueError : Paramètre non fini : beta=inf
+[CONFORME] refus : lambda = NaN
+      ValueError : Paramètre non fini : lambda=nan
+[CONFORME] refus : lambda = +∞
+      ValueError : Paramètre non fini : lambda=inf
+[CONFORME] refus : tau = NaN
+      ValueError : Paramètre non fini : tau=nan
+[CONFORME] refus : tau = +∞
+      ValueError : Paramètre non fini : tau=inf
+[CONFORME] refus : ibd0 = NaN
+      ValueError : Paramètre non fini : ibd0=nan
+[CONFORME] refus : ibd0 = +∞
+      ValueError : Paramètre non fini : ibd0=inf
+[CONFORME] refus : iee0 = NaN
+      ValueError : Paramètre non fini : iee0=nan
+[CONFORME] refus : iee0 = +∞
+      ValueError : Paramètre non fini : iee0=inf
+[CONFORME] refus : irnr0 = NaN
+      ValueError : Paramètre non fini : irnr0=nan
+[CONFORME] refus : irnr0 = +∞
+      ValueError : Paramètre non fini : irnr0=inf
+[CONFORME] refus : m0 = NaN
+      ValueError : Paramètre non fini : m0=nan
+[CONFORME] refus : m0 = +∞
+      ValueError : Paramètre non fini : m0=inf
+[CONFORME] refus : k_env = NaN
+      ValueError : Paramètre non fini : k_env=nan
+[CONFORME] refus : k_env = +∞
+      ValueError : Paramètre non fini : k_env=inf
+[CONFORME] refus : k_social = NaN
+      ValueError : Paramètre non fini : k_social=nan
+[CONFORME] refus : k_social = +∞
+      ValueError : Paramètre non fini : k_social=inf
+[CONFORME] refus : z_cible = NaN
+      ValueError : Paramètre non fini : z_cible=nan
+[CONFORME] refus : z_cible = +∞
+      ValueError : Paramètre non fini : z_cible=inf
+[CONFORME] refus : m_cible_lo = NaN
+      ValueError : Paramètre non fini : m_cible_lo=nan
+[CONFORME] refus : m_cible_lo = +∞
+      ValueError : Paramètre non fini : m_cible_lo=inf
+[CONFORME] refus : m_cible_hi = NaN
+      ValueError : Paramètre non fini : m_cible_hi=nan
+[CONFORME] refus : m_cible_hi = +∞
+      ValueError : Paramètre non fini : m_cible_hi=inf
+   (attendu : acceptation)
+[CONFORME] acceptation : τ = 10, Δt = 0,025
+      exécution sans erreur
+[CONFORME] acceptation : T = 3000, Δt = 0,05
+      exécution sans erreur
+[CONFORME] acceptation : égalité d'invariance β + γ_1 = 2α (F, β = 0,22)
+      exécution sans erreur
+[CONFORME] acceptation : S_0 = (2 ; 2 ; 2)
+      exécution sans erreur
+[CONFORME] acceptation : S_0 = (0 ; 0 ; 0)
+      exécution sans erreur
+== 5. Retard : u_k = min(IED_{k−τ_steps}, 1), histoire constante IED_0
+[CONFORME] τ = 3, Δt = 0.05 : égalité exacte sur 1401 états (τ_steps = 60)
+[CONFORME] τ = 3, Δt = 0.025 : égalité exacte sur 2801 états (τ_steps = 120)
+[CONFORME] τ = 6, Δt = 0.05 : égalité exacte sur 1401 états (τ_steps = 120)
+[CONFORME] τ = 6, Δt = 0.025 : égalité exacte sur 2801 états (τ_steps = 240)
+[CONFORME] τ = 10, Δt = 0.05 : égalité exacte sur 1401 états (τ_steps = 200)
+[CONFORME] τ = 10, Δt = 0.025 : égalité exacte sur 2801 états (τ_steps = 400)
+[CONFORME] τ = 15, Δt = 0.05 : égalité exacte sur 1401 états (τ_steps = 300)
+[CONFORME] τ = 15, Δt = 0.025 : égalité exacte sur 2801 états (τ_steps = 600)
+== 6. Certificat de l'instance B — arithmétique rationnelle exacte
+[CONFORME] paramètres du scénario B : α = 0,07 ; β = 0,03 ; λ = 0,15
+[CONFORME] ∏(β_i z + γ_i)/α_i − z³ = Q(z)/22295, Q(z) = −21620z³ + 1395z² + 954z + 216
+      coefficients obtenus (degré croissant) : [216, 954, 1395, -21620]
+[CONFORME] Q(31/100) = 5369/3125 > 0 et Q(311/1000) = −135739961/50000000 < 0
+      obtenu 5369/3125 et -135739961/50000000
+[CONFORME] point fixe du moteur dans (0,310 ; 0,311), S* dans (0, 2)³
+      IED* = 0.3103885810 ; résidu 2.2e-16
+[CONFORME] M* = z*/λ dans (31/15 ; 311/150) ; (S*, M*) dans K
+      M* = 2.069257
+[CONFORME] trajectoire issue de (S*, M*) : constante et dans K sur [0, 70]
+      dispersion de l'IED : 0.0e+00
+== 7. Paramètres du scénario E (α = 0,22 ; β = 0,28 ; λ = 0,15), τ = 10
+[CONFORME] état initial de l'article (0,45 ; 0,45 ; 0,4), Δt = 0.05 : 0 retournement
+[CONFORME] état initial de l'article (0,45 ; 0,45 ; 0,4), Δt = 0.025 : 0 retournement
+[CONFORME] état initial (0,1 ; 1,9 ; 1,9), Δt = 0.05 : 10 retournements relevés par le détecteur
+      obtenu 10
+[CONFORME]    amortissement : les alternances de même sens ont une amplitude strictement décroissante (Δt = 0.05)
+      amplitudes : 0.1636 ; 0.0910 ; 0.0460 ; 0.0325 ; 0.0142 ; 0.0127 ; 0.0036 ; 0.0060 ; 0.0002
+[CONFORME] état initial (0,1 ; 1,9 ; 1,9), Δt = 0.025 : 10 retournements relevés par le détecteur
+      obtenu 10
+[CONFORME]    amortissement : les alternances de même sens ont une amplitude strictement décroissante (Δt = 0.025)
+      amplitudes : 0.1631 ; 0.0907 ; 0.0456 ; 0.0322 ; 0.0140 ; 0.0125 ; 0.0036 ; 0.0060 ; 0.0002
+== 8. Régime du flux terminal (critère relatif défini pour q(T) > 0)
+[CONFORME] flux_terminal : q(T) = 1, q(0,9T) = 1 : critère relatif satisfait
+      obtenu régime = relatif, flux_rel = 0.0, flux_stab = True
+[CONFORME] flux_terminal : q(T) = 0,5, q(0,9T) = 0,4995 : variation relative 1e-3, non strictement inférieure au seuil
+      obtenu régime = relatif, flux_rel = 0.0010000000000000009, flux_stab = False
+[CONFORME] flux_terminal : q(T) = 0,5, q(0,9T) = 0,4 : critère relatif non satisfait
+      obtenu régime = relatif, flux_rel = 0.19999999999999996, flux_stab = False
+[CONFORME] flux_terminal : q(T) = 0, q(0,9T) = 0 : flux nul constant, critère relatif non défini
+      obtenu régime = nul_constant, flux_rel = None, flux_stab = False
+[CONFORME] flux_terminal : q(T) = 0, q(0,9T) = 0,3 : extinction
+      obtenu régime = extinction, flux_rel = inf, flux_stab = False
+[CONFORME] run : S_0 = (0 ; 0 ; 0), τ = 100 > T : u = 0 sur tout l'horizon, flux nul constant
+      q(T) = 0.0 ; régime = nul_constant ; flux_rel = None ; flux_stab = False
+[CONFORME] scénario A : régime relatif, flux_rel = |q(T) − q(0,9T)|/q(T)
+      flux_rel = 0.000e+00 ; flux_stab = True
+[CONFORME] scénario B : régime relatif, flux_rel = |q(T) − q(0,9T)|/q(T)
+      flux_rel = 1.060e-02 ; flux_stab = False
+[CONFORME] scénario C : régime relatif, flux_rel = |q(T) − q(0,9T)|/q(T)
+      flux_rel = 9.520e-03 ; flux_stab = False
+[CONFORME] scénario E : régime relatif, flux_rel = |q(T) − q(0,9T)|/q(T)
+      flux_rel = 2.318e-02 ; flux_stab = False
+[CONFORME] scénario F : régime relatif, flux_rel = |q(T) − q(0,9T)|/q(T)
+      flux_rel = 0.000e+00 ; flux_stab = True
+== 9. Grille : au moins un intervalle, au moins un pas de retard pour τ > 0
+[CONFORME] refus : T = 1e-12, Δt = 0,05 (N = 0)
+      ValueError : Horizon T=1e-12 sans intervalle au pas dt=0.05 (N = 0) : choisir T >= dt.
+[CONFORME] refus : T = 4e-11, Δt = 0,05 (N = 0)
+      ValueError : Horizon T=4e-11 sans intervalle au pas dt=0.05 (N = 0) : choisir T >= dt.
+[CONFORME] refus : τ = 1e-12, Δt = 0,05 (τ_steps = 0)
+      ValueError : Retard tau=1e-12 sans pas entier au pas dt=0.05 (tau_steps = 0) : choisir tau = 
+[CONFORME] refus : τ = 4e-11, Δt = 0,05 (τ_steps = 0)
+      ValueError : Retard tau=4e-11 sans pas entier au pas dt=0.05 (tau_steps = 0) : choisir tau = 
+[CONFORME] acceptation : T = Δt = 0,05 : un intervalle, deux états, t_N = T
+[CONFORME] acceptation : τ = Δt = 0,05 : un pas de retard effectif
+== 10. Point fixe bouclé : racine sous la borne basse du balayage, résidu, encadrement
+[CONFORME] α = 1000, β = 0 : racine exacte (∏ γ_i/α_i)^(1/3) = 1.492268e-05
+      obtenu 1.492268e-05 ; écart relatif 3.0e-12 ; résidu 4.5e-17
+[CONFORME] α = 300, β = 0 : racine exacte (∏ γ_i/α_i)^(1/3) = 4.974226e-05
+      obtenu 4.974226e-05 ; écart relatif 5.4e-12 ; résidu 2.7e-16
+[CONFORME] α = 150, β = 0 : racine exacte (∏ γ_i/α_i)^(1/3) = 9.948453e-05
+      obtenu 9.948453e-05 ; écart relatif 1.8e-12 ; résidu 1.8e-16
+[CONFORME] 2000 couples (α, β) admissibles tirés au hasard, α de 0,01 à 1 585 : accord avec une bissection indépendante
+      résidu maximal 4.4e-16 ; écart relatif maximal 2.7e-11
+[CONFORME] refus : α = 0,1, β = 1 (paramètres inadmissibles, point fixe hors de [0, 2])
+      ValueError : Carte de point fixe hors [0,2]^3 : [2.0009099999999997, 1.9809099999999997, 0.78
+[CONFORME] refus : α non fini
+      ValueError : Point fixe non encadré sur [0, 2] pour alpha=nan, beta=0.1.
+[CONFORME] points fixes de B et C : 0,3104 et 0,2695 (tableau T3)
+      IED*_B = 0.3103885810 ; IED*_C = 0.2694865987
+
+BILAN : 111 tests conformes, 0 non conformes

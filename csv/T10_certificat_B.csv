@@ -1,0 +1,15 @@
+verification,resultat
+polynôme du moteur proportionnel à Q(z) de la note (arithmétique exacte),True
+changement de signe de Q sur (0.310 ; 0.311),True
+z* < 1 (branche non saturée de Φ_sat),True
+|z*(note) − IED*(moteur)| < 1e-12,True
+"S* ∈ (0,2)^3",True
+IED(S*) = z* (|écart| < 1e-12),True
+M* ∈ (31/15 ; 311/150),True
+IED(S*) > k_env strictement,True
+M* > k_social strictement,True
+résidus d'équilibre du champ bouclé < 1e-12,True
+z*,0.310388581023
+S*,0.418738 ; 0.390167 ; 0.183031
+M*,2.069257
+portée,condition suffisante élémentaire de P-F1 : Viab(K)≠∅ pour l'instance B seulement ; ni noyau ni triplets caractérisés

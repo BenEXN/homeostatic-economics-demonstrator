@@ -1,0 +1,5 @@
+# Répertoire d'essai suggéré par README.md (étape 2)
+essai/
+# Fichiers compilés Python
+__pycache__/
+*.pyc

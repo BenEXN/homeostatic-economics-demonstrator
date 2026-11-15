@@ -1,0 +1,199 @@
+Démonstrateur EH — moteur de référence, sorties reproductibles
+
+[T1] ROBUSTESSE — Δt=0.05 et 0.025, T=70 (test qualitatif renforcé)
+----------------------------------------------------------------------------------------------------
+scénario                                  dt  IED0    min    fin    %K entréeZ sortieK  osc
+A · Référence — maintien sur horizon f  0.05 1.361  1.361  1.459 100.0    None    NoneFalse
+A · Référence — maintien sur horizon f 0.025 1.361  1.361  1.459 100.0    None    NoneFalse
+B · Approche progressive du seuil envi  0.05 0.626  0.318  0.318 100.0    None    NoneFalse
+B · Approche progressive du seuil envi 0.025 0.626  0.318  0.318 100.0    None    NoneFalse
+C · Sortie environnementale de K        0.05 0.626  0.275  0.275  57.1    None    40.0False
+C · Sortie environnementale de K       0.025 0.626  0.275  0.275  57.2    None  40.025False
+E · Délai actif sans oscillation obser  0.05 0.433  0.433  0.591 100.0    None    NoneFalse
+E · Délai actif sans oscillation obser 0.025 0.433  0.433  0.591 100.0    None    NoneFalse
+F · Accès conditionnel à Z_cible        0.05 0.548  0.548  1.094 100.0   26.65    NoneFalse
+F · Accès conditionnel à Z_cible       0.025 0.548  0.548  1.094 100.0   26.65    NoneFalse
+  [CSV] csv/T1_robustesse.csv
+  Verdict (test renforcé : sortie+cause, signe marge, entrée, oscillation, instants) :
+    A · Référence — maintien sur horizon f comportement qualitativement inchangé lors du raffinement du pas de 0.05 à 0.025
+    B · Approche progressive du seuil envi comportement qualitativement inchangé lors du raffinement du pas de 0.05 à 0.025
+    C · Sortie environnementale de K       comportement qualitativement inchangé lors du raffinement du pas de 0.05 à 0.025
+    E · Délai actif sans oscillation obser comportement qualitativement inchangé lors du raffinement du pas de 0.05 à 0.025
+    F · Accès conditionnel à Z_cible       comportement qualitativement inchangé lors du raffinement du pas de 0.05 à 0.025
+
+[T2] MONÉTAIRE — cible quasi-stationnaire M*(T)=[e(T)+R(T)]/λ (WP §5.5) ; borne analytique 0<=M<=max(M0,1/λ)
+----------------------------------------------------------------------------------------------------
+scénario                                   λ     q_T   M(70)   M*(T)  flux_rel           flux      origine u_unsat%  borne
+A · Référence — maintien sur horizon f  0.12   1.000    8.33    8.33  0.00e+00      stabilisé saturation u=1      0.0     ok
+B · Approche progressive du seuil envi  0.15   0.318    2.15    2.12  1.06e-02  NON stabilisé            -    100.0     ok
+C · Sortie environnementale de K        0.15   0.275    1.85    1.83  9.52e-03  NON stabilisé            -    100.0     ok
+E · Délai actif sans oscillation obser  0.15   0.573    3.73    3.82  2.32e-02  NON stabilisé            -    100.0     ok
+F · Accès conditionnel à Z_cible        0.82   1.000    1.22    1.22  0.00e+00      stabilisé saturation u=1     49.5     ok
+  [CSV] csv/T2_monetaire.csv
+
+[T3] POINTS FIXES — g(x)=G_fp(x)−x=0 (bissection) ; contrôle simulation T=3000
+----------------------------------------------------------------------------------------------------
+  B · Approche progressive du seuil environnemental : IED*=0.310389 (résidu 2.22e-16) ; contrôle T=3000=0.310389 ; IED*-k_env=+0.0104 (strict>: True)
+  C · Sortie environnementale de K : IED*=0.269487 (résidu 1.11e-16) ; contrôle T=3000=0.269487 ; IED*-k_env=-0.0305 (strict>: False)
+  B : min_(0<=t<=70) IED(t) = 0.3182 -> marge minimale sur T=70 = 0.0182
+  Note : IED* = point fixe numérique ; aucune stabilité asymptotique démontrée ; maintien formulé sur T=70.
+  [CSV] csv/T3_points_fixes.csv
+
+[T4] C3.1 — ILLUSTRATION STATIQUE (algèbre pure, hors moteur) : IED(r)=(1.5·1.5·r)^(1/3)
+----------------------------------------------------------------------------------------------------
+    IRNR        IED(r)
+    1.50        1.5000
+    1.00        1.3104
+    0.50        1.0400
+    0.20        0.7663
+    0.10        0.6082
+    0.05        0.4827
+    0.01        0.2823
+  [CSV] csv/T4_C31_statique.csv
+
+[T5] C3.1 — FAMILLE DYNAMIQUE DISTINCTE (3 composantes évoluent ; seules les CI fixées)
+----------------------------------------------------------------------------------------------------
+  IRNR0   IED0  IEDmin  IEDfin
+   1.50  1.500   1.278   1.278   -
+   1.00  1.310   1.276   1.278   -
+   0.50  1.040   1.040   1.278   IED0 abaissé puis remonte (pas de chute dynamique)
+   0.20  0.766   0.766   1.278   IED0 abaissé puis remonte (pas de chute dynamique)
+   0.05  0.483   0.483   1.277   IED0 abaissé puis remonte (pas de chute dynamique)
+  [CSV] csv/T5_C31_dynamique.csv
+
+[T6] SCÉNARIO E — délai : écart de trajectoire + détecteur d'oscillations (pente/Δt)
+----------------------------------------------------------------------------------------------------
+     pentes m_k=(IED_k+1−IED_k)/Δt ; θ=0.0001 IED/temps ; R_min=2
+     (1 retournement = extremum isolé ou dépassement transitoire ; ≥2 = oscillation)
+   τ     dt   max|ΔIED|  IEDfin u_unsat% #retour. oscill.
+   0   0.05      0.0000   0.775    100.0        0   False
+   3   0.05      0.0889   0.686    100.0        0   False
+   6   0.05      0.1417   0.634    100.0        0   False
+  10   0.05      0.1844   0.591    100.0        0   False
+  15   0.05      0.2167   0.559    100.0        0   False
+   0  0.025      0.0000   0.775    100.0        0   False
+   3  0.025      0.0889   0.686    100.0        0   False
+   6  0.025      0.1417   0.634    100.0        0   False
+  10  0.025      0.1844   0.591    100.0        0   False
+  15  0.025      0.2167   0.559    100.0        0   False
+  [CSV] csv/T6_delai_tau.csv
+  Conclusion : « Aucun retournement significatif et répété n'a été détecté selon le critère
+  défini, pour les paramètres, les délais et l'horizon testés. »
+
+[T7] SCÉNARIO F — β_entry^Δt(70; p_{−β}) : grille fine, robustesse, métriques Z_cible
+----------------------------------------------------------------------------------------------------
+     IED0 = 0.548 < z_cible = 0.9 (départ strictement hors Z_cible)
+    β  eqIED  ent.05  ent.025 nE   1ère  dSort  +long   séj%  Mfin  fen    %K
+ 0.10  0.317    None     None  0   None   None   0.00    0.0  0.39  NON 100.0
+ 0.11  0.375    None     None  0   None   None   0.00    0.0  0.47  NON 100.0
+ 0.12  0.458    None     None  0   None   None   0.00    0.0  0.57  NON 100.0
+ 0.13  0.589    None     None  0   None   None   0.00    0.0  0.71  oui 100.0
+ 0.14  0.825    None     None  0   None   None   0.00    0.0  0.92  oui 100.0
+ 0.15  1.034   47.65    47.65  1  47.65   None  22.35   32.0  1.22  oui 100.0
+ 0.16  1.095   26.65    26.65  1  26.65   None  43.35   62.0  1.22  oui 100.0
+ 0.17  1.155    18.6     18.6  1   18.6   None  51.40   73.4  1.22  oui 100.0
+ 0.18  1.216    14.3   14.275  1   14.3   None  55.70   79.6  1.22  oui 100.0
+ 0.19  1.277    11.6   11.575  1   11.6   None  58.40   83.4  1.22  oui 100.0
+ 0.20  1.337    9.75    9.725  1   9.75   None  60.25   86.1  1.22  oui 100.0
+ 0.21  1.398     8.4      8.4  1    8.4   None  61.60   88.0  1.22  oui 100.0
+ 0.22  1.458     7.4    7.375  1    7.4   None  62.60   89.4  1.22  oui 100.0
+  [CSV] csv/T7_beta_grid.csv
+
+  Encadrement généré automatiquement : 0.14 < β_entry^Δt(70; p_(−β)) ≤ 0.15
+  (transition numérique dépendante du protocole, non un seuil intrinsèque)
+  Instant de 1re entrée décroissant sur la grille testée : True
+  Durée d'occupation non monotone sur la grille : False ; maximum observé vers β=0.22.
+  Z_cible (scénario retenu β=0.16) : nb_entrées=1 ; 1er instant d'entrée=26.65 ; dernier instant de sortie=None ; plus long séjour continu=43.35
+
+[T8] TABLEAU À QUATRE REGISTRES
+----------------------------------------------------------------------------------------------------
+  · A
+      observation: pct_K=100 ; min_(0<=t<=70)IED=1.361 ; M(70)=8.33
+      calcul     : M*(T)=8.33 ; flux_rel=0.0e+00 ; u_unsat=0.0% (stabilisation par saturation u=1)
+      interprét. : maintien de la trajectoire dans K sur l'horizon, sans proximité du bord
+      limite     : interne à l'instance affine, ces paramètres, horizon T=70
+  · B
+      observation: pct_K=100 ; min_(0<=t<=70)IED=0.318
+      calcul     : IED*=0.3104 (résidu 2e-16) ; IED*-k_env=+0.0104 ; marge min T=70=0.018 ; certificat d'équilibre P-F1 : Viab(K)≠∅ pour cette instance (T10)
+      interprét. : approche progressive du seuil environnemental sans le franchir sur l'horizon
+      limite     : non-vacuité limitée à l'instance B ; ni noyau ni triplets caractérisés ; maintien de la trajectoire simulée sur T=70
+  · C
+      observation: sortie de K à t=40.0 ; pct_K=57.1 ; min_(0<=t<=70)IED=0.275
+      calcul     : IED*=0.2695 < k_env ; cause=env
+      interprét. : sortie du corridor imputable à la contrainte environnementale
+      limite     : dépend des paramètres et de x0 ; une instance
+  · D_statique
+      observation: IED(1.5,1.5,r), r=1.5/0.5/0.1/0.01
+      calcul     : 1.5000 / 1.0400 / 0.6082 / 0.2823
+      interprét. : non-compensabilité au bord (propriété de valeur)
+      limite     : algébrique ; ≠ non-substituabilité empirique ; ≠ C3.2 (sensibilité différentielle absolue)
+  · D_dynamique
+      observation: IED0 de 1.500 à 0.483 ; IED_final de 1.277 à 1.278
+      calcul     : écart IED_final − IED0 > 0
+      interprét. : valeur initiale abaissée puis redressée (pas de chute dynamique)
+      limite     : famille distincte de l'illustration statique
+  · E
+      observation: nb_retournements=0 (τ=3..15) ; max|ΔIED| jusqu'à 0.217 ; u_unsat=100.0%
+      calcul     : pente/Δt, θ=1e-4 IED/temps ; écart de trajectoire vs τ=0
+      interprét. : délai actif sans oscillation observée ; τ>0 hors périmètre EDO de P-F1 (C2/P-F2)
+      limite     : τ∈{0,3,6,10,15}, T=70, ces paramètres ; n'exclut pas l'oscillation en général
+  · F
+      observation: départ hors Z_cible ; nb_entrées=1 ; 1re entrée t=26.65 ; dernière sortie t=None ; plus long séjour=43.35
+      calcul     : transition entrée : 0.14 < β_entry^Δt(70;p_(−β)) ≤ 0.15 ; occupation non monotone=False
+      interprét. : accès à Z_cible conditionné par β sur la grille explorée ; l'occupation est décrite sans inférence d'attractivité
+      limite     : transition dépendante du protocole ; ni convergence ni attractivité
+  · G_monetaire
+      observation: M(70) de 1.22 à 8.33 selon scénario
+      calcul     : M*(T)=[e(T)+R(T)]/λ (cible quasi-stationnaire du WP) ; flux stabilisé ssi flux_rel<1e-3 ; scénarios stabilisés=['A_reference', 'F_acces_Zcible'] ; borne analytique 0<=M(t)<=max(M0,1/λ)
+      interprét. : M borné pour tout t (borne analytique, propriété (P) vérifiée) ; position de M*(T) / fenêtre de Z_cible — à l'intérieur : F ; au-delà : A,B,C,E ; stabilisation de A et F due à la saturation u=1
+      limite     : M*(T) n'est pas un équilibre du système complet ; valeur de référence tant que le flux n'est pas stabilisé
+  [CSV] csv/T8_quatre_registres.csv
+
+[T9] ADMISSIBILITÉ AU SENS DE LA NOTE P-F1 (F1, F3′, F4, (L), 𝒫_Φ, (D1)–(D4), (P), régularité)
+----------------------------------------------------------------------------------------------------
+  A · Référence — maintien sur horizon f τ=0 : oui                            F3′=True F4=True Φ∈𝒫_Φ=True (P)=True δ=1.361
+  B · Approche progressive du seuil envi τ=0 : oui                            F3′=True F4=True Φ∈𝒫_Φ=True (P)=True δ=0.318
+  C · Sortie environnementale de K       τ=0 : oui                            F3′=True F4=True Φ∈𝒫_Φ=True (P)=True δ=0.275
+  E · Délai actif sans oscillation obser τ>0 : hors périmètre EDO (C2/P-F2)   F3′=True F4=True Φ∈𝒫_Φ=True (P)=True δ=0.433
+  F · Accès conditionnel à Z_cible       τ=0 : oui                            F3′=True F4=True Φ∈𝒫_Φ=True (P)=True δ=0.548
+  u_max=1 : le régime d'expansion u>1 du WP est exclu de toutes les instances.
+  [CSV] csv/T9_admissibilite_PF1.csv
+
+[T10] CERTIFICAT D'ÉQUILIBRE — INSTANCE B (concordance avec la note P-F1, §4)
+----------------------------------------------------------------------------------------------------
+  [ok] polynôme du moteur proportionnel à Q(z) de la note (arithmétique exacte)
+  [ok] changement de signe de Q sur (0.310 ; 0.311)
+  [ok] z* < 1 (branche non saturée de Φ_sat)
+  [ok] |z*(note) − IED*(moteur)| < 1e-12
+  [ok] S* ∈ (0,2)^3
+  [ok] IED(S*) = z* (|écart| < 1e-12)
+  [ok] M* ∈ (31/15 ; 311/150)
+  [ok] IED(S*) > k_env strictement
+  [ok] M* > k_social strictement
+  [ok] résidus d'équilibre du champ bouclé < 1e-12
+  z*=0.310388581023 ; S*=(0.4187 ; 0.3902 ; 0.1830) ; M*=2.069257
+  Portée : Viab(K)≠∅ pour l'instance B seulement ; ni le noyau ni les triplets (F,Φ,Λ) ne sont caractérisés.
+  [CSV] csv/T10_certificat_B.csv
+
+[FIGURES] génération graphique
+----------------------------------------------------------------------------------------------------
+  [FIG] figures/figure_01_architecture_programme.png
+  [FIG] figures/figure_01_architecture_programme.pdf
+  [FIG] figures/figure_02_architecture_triangulaire.png
+  [FIG] figures/figure_02_architecture_triangulaire.pdf
+  [FIG] figures/figure_03_geometrie_K_Zcible.png
+  [FIG] figures/figure_03_geometrie_K_Zcible.pdf
+  [FIG] figures/figure_04_C31_statique.png
+  [FIG] figures/figure_04_C31_statique.pdf
+  [FIG] figures/figure_05_trajectoires_IED.png
+  [FIG] figures/figure_05_trajectoires_IED.pdf
+  [FIG] figures/figure_06_portraits_IED_M.png
+  [FIG] figures/figure_06_portraits_IED_M.pdf
+  [FIG] figures/figure_S1_delai_tau.png
+  [FIG] figures/figure_S1_delai_tau.pdf
+  [FIG] figures/figure_S2_beta_Zcible.png
+  [FIG] figures/figure_S2_beta_Zcible.pdf
+
+FIN — tous les tableaux régénérés en une exécution.
+  CSV     : ./csv/
+  Figures : ./figures/  (PNG 300 dpi + PDF vectoriel) — génération réussie

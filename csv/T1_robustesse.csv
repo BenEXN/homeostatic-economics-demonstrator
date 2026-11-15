@@ -1,0 +1,11 @@
+scenario,dt,IED0,IED_min(0..70),IED_final,pct_K,entree_Zcible,sortie_K,cause,oscillation
+A_reference,0.05,1.3608,1.3608,1.4590,100.0,,,,False
+A_reference,0.025,1.3608,1.3608,1.4590,100.0,,,,False
+B_approche_seuil,0.05,0.6257,0.3182,0.3182,100.0,,,,False
+B_approche_seuil,0.025,0.6257,0.3182,0.3182,100.0,,,,False
+C_sortie_K,0.05,0.6257,0.2746,0.2746,57.1,,40.0,env,False
+C_sortie_K,0.025,0.6257,0.2746,0.2746,57.2,,40.025,env,False
+E_delai,0.05,0.4327,0.4327,0.5910,100.0,,,,False
+E_delai,0.025,0.4327,0.4327,0.5910,100.0,,,,False
+F_acces_Zcible,0.05,0.5485,0.5485,1.0937,100.0,26.65,,,False
+F_acces_Zcible,0.025,0.5485,0.5485,1.0937,100.0,26.65,,,False

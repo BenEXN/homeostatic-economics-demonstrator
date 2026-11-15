@@ -1,0 +1,113 @@
+================================================================================================
+CONTRÔLE COMPLÉMENTAIRE PAR INTÉGRATEURS D'ORDRE SUPÉRIEUR — démonstrateur EH V1.1
+DOP853, rtol = 1e-12, atol = 1e-14 ; méthode des pas pour τ > 0
+================================================================================================
+
+0. Paramètres retranscrits du §6 de l'article, comparés à ceux du moteur
+  cinq scénarios, grille β et vecteur γ identiques -> CONFORME
+
+1. Moteur de référence (Euler) contre solution d'ordre supérieur, t ∈ [0, 70]
+  A              ordre supérieur : IED(70) = 1.4589963748 ; M(70) = 8.33172928
+      Euler Δt=0.05   IED(70) = 1.4589997252 ; écart max sur la grille : IED 3.54e-05 ; M 7.89e-03
+      Euler Δt=0.025  IED(70) = 1.4589980535 ; écart max sur la grille : IED 1.77e-05 ; M 3.94e-03
+      rapport des écarts max sur l'IED entre Δt = 0,05 et 0,025 : 2.00
+  B              ordre supérieur : IED(70) = 0.3182120161 ; M(70) = 2.14864196
+      Euler Δt=0.05   IED(70) = 0.3181755147 ; écart max sur la grille : IED 1.67e-04 ; M 5.21e-03
+      Euler Δt=0.025  IED(70) = 0.3181937587 ; écart max sur la grille : IED 8.33e-05 ; M 2.60e-03
+      rapport des écarts max sur l'IED entre Δt = 0,05 et 0,025 : 2.00
+  C              ordre supérieur : IED(70) = 0.2746386055 ; M(70) = 1.85318854
+      Euler Δt=0.05   IED(70) = 0.2746071506 ; écart max sur la grille : IED 2.12e-04 ; M 5.32e-03
+      Euler Δt=0.025  IED(70) = 0.2746228684 ; écart max sur la grille : IED 1.06e-04 ; M 2.66e-03
+      rapport des écarts max sur l'IED entre Δt = 0,05 et 0,025 : 2.00
+  F (β=0,16)     ordre supérieur : IED(70) = 1.0936830191 ; M(70) = 1.21951220
+      Euler Δt=0.05   IED(70) = 1.0936978367 ; écart max sur la grille : IED 1.06e-04 ; M 2.72e-03
+      Euler Δt=0.025  IED(70) = 1.0936904399 ; écart max sur la grille : IED 5.28e-05 ; M 1.35e-03
+      rapport des écarts max sur l'IED entre Δt = 0,05 et 0,025 : 2.00
+  E (τ=0)        ordre supérieur : IED(70) = 0.7753027973 ; M(70) = 5.04202235
+      Euler Δt=0.05   IED(70) = 0.7753516262 ; écart max sur la grille : IED 9.77e-05 ; M 2.12e-03
+      Euler Δt=0.025  IED(70) = 0.7753272444 ; écart max sur la grille : IED 4.86e-05 ; M 1.06e-03
+      rapport des écarts max sur l'IED entre Δt = 0,05 et 0,025 : 2.01
+  E (τ=3)        ordre supérieur : IED(70) = 0.6863973548 ; M(70) = 4.40553588
+      Euler Δt=0.05   IED(70) = 0.6864220088 ; écart max sur la grille : IED 3.24e-05 ; M 2.65e-03
+      Euler Δt=0.025  IED(70) = 0.6864097199 ; écart max sur la grille : IED 1.60e-05 ; M 1.32e-03
+      rapport des écarts max sur l'IED entre Δt = 0,05 et 0,025 : 2.02
+  E (τ=6)        ordre supérieur : IED(70) = 0.6335967850 ; M(70) = 4.03204236
+      Euler Δt=0.05   IED(70) = 0.6336161031 ; écart max sur la grille : IED 2.50e-05 ; M 2.87e-03
+      Euler Δt=0.025  IED(70) = 0.6336064789 ; écart max sur la grille : IED 1.25e-05 ; M 1.43e-03
+      rapport des écarts max sur l'IED entre Δt = 0,05 et 0,025 : 2.00
+  E (τ=10)       ordre supérieur : IED(70) = 0.5909442436 ; M(70) = 3.73214504
+      Euler Δt=0.05   IED(70) = 0.5909618154 ; écart max sur la grille : IED 3.86e-05 ; M 2.88e-03
+      Euler Δt=0.025  IED(70) = 0.5909530492 ; écart max sur la grille : IED 1.93e-05 ; M 1.44e-03
+      rapport des écarts max sur l'IED entre Δt = 0,05 et 0,025 : 2.00
+  E (τ=15)       ordre supérieur : IED(70) = 0.5586745023 ; M(70) = 3.50701361
+      Euler Δt=0.05   IED(70) = 0.5586786272 ; écart max sur la grille : IED 3.77e-05 ; M 2.88e-03
+      Euler Δt=0.025  IED(70) = 0.5586766112 ; écart max sur la grille : IED 1.88e-05 ; M 1.44e-03
+      rapport des écarts max sur l'IED entre Δt = 0,05 et 0,025 : 2.00
+  Contrôle : les écarts sont divisés par deux environ lorsque le pas est divisé par deux -> CONFORME
+
+2. Scénario C — franchissement IED = k_env de la solution continue
+  solution d'ordre supérieur (DOP853) : t = 40.048363
+  moteur de référence, premier état de la grille hors de K (Δt = 0,05) : t = 40.0
+  valeur attendue : t ≈ 40.048363 (tolérance 5e-06) -> CONFORME
+
+3. Scénario E — écart maximal à la trajectoire sans retard, sur la grille t_k = 0,05·k
+  τ = 3   ordre supérieur : 0.08891 ; moteur (Euler, Δt = 0,05, tableau T6) : 0.08893
+  τ = 6   ordre supérieur : 0.14171 ; moteur (Euler, Δt = 0,05, tableau T6) : 0.14174
+  τ = 10  ordre supérieur : 0.18436 ; moteur (Euler, Δt = 0,05, tableau T6) : 0.18439
+  τ = 15  ordre supérieur : 0.21663 ; moteur (Euler, Δt = 0,05, tableau T6) : 0.21667
+
+4. Zone cible complète Z_cible = {IED ≥ z_cible} ∩ {m_lo ≤ M ≤ m_hi} : entrées et sorties, t ∈ [0, 70]
+   Événements de la solution d'ordre supérieur : appartenance évaluée tous les 0,005, instants affinés
+   par recherche de racine sur c(t) = min(IED − z_cible, M − m_lo, m_hi − M) ; contrainte active indiquée.
+   Accord exigé avec le moteur (grille, Δt = 0,05) : même occupation initiale, même nombre d'entrées,
+   même présence d'une sortie finale, instants à moins de 0.15 près.
+  F, β = 0.10
+      ordre supérieur : occupation initiale = False ; entrées : aucune ; sorties : aucune
+      moteur          : occupation initiale = False ; entrées : 0 (première : None) ; dernière sortie : None -> CONFORME
+  F, β = 0.11
+      ordre supérieur : occupation initiale = False ; entrées : aucune ; sorties : aucune
+      moteur          : occupation initiale = False ; entrées : 0 (première : None) ; dernière sortie : None -> CONFORME
+  F, β = 0.12
+      ordre supérieur : occupation initiale = False ; entrées : aucune ; sorties : aucune
+      moteur          : occupation initiale = False ; entrées : 0 (première : None) ; dernière sortie : None -> CONFORME
+  F, β = 0.13
+      ordre supérieur : occupation initiale = False ; entrées : aucune ; sorties : aucune
+      moteur          : occupation initiale = False ; entrées : 0 (première : None) ; dernière sortie : None -> CONFORME
+  F, β = 0.14
+      ordre supérieur : occupation initiale = False ; entrées : aucune ; sorties : aucune
+      moteur          : occupation initiale = False ; entrées : 0 (première : None) ; dernière sortie : None -> CONFORME
+  F, β = 0.15
+      ordre supérieur : occupation initiale = False ; entrées : t = 47.6493 (IED = z_cible) ; sorties : aucune
+      moteur          : occupation initiale = False ; entrées : 1 (première : 47.65) ; dernière sortie : None -> CONFORME
+  F, β = 0.16
+      ordre supérieur : occupation initiale = False ; entrées : t = 26.6449 (IED = z_cible) ; sorties : aucune
+      moteur          : occupation initiale = False ; entrées : 1 (première : 26.65) ; dernière sortie : None -> CONFORME
+  F, β = 0.17
+      ordre supérieur : occupation initiale = False ; entrées : t = 18.5794 (IED = z_cible) ; sorties : aucune
+      moteur          : occupation initiale = False ; entrées : 1 (première : 18.6) ; dernière sortie : None -> CONFORME
+  F, β = 0.18
+      ordre supérieur : occupation initiale = False ; entrées : t = 14.2543 (IED = z_cible) ; sorties : aucune
+      moteur          : occupation initiale = False ; entrées : 1 (première : 14.3) ; dernière sortie : None -> CONFORME
+  F, β = 0.19
+      ordre supérieur : occupation initiale = False ; entrées : t = 11.5553 (IED = z_cible) ; sorties : aucune
+      moteur          : occupation initiale = False ; entrées : 1 (première : 11.6) ; dernière sortie : None -> CONFORME
+  F, β = 0.20
+      ordre supérieur : occupation initiale = False ; entrées : t = 9.7121 (IED = z_cible) ; sorties : aucune
+      moteur          : occupation initiale = False ; entrées : 1 (première : 9.75) ; dernière sortie : None -> CONFORME
+  F, β = 0.21
+      ordre supérieur : occupation initiale = False ; entrées : t = 8.3746 (IED = z_cible) ; sorties : aucune
+      moteur          : occupation initiale = False ; entrées : 1 (première : 8.4) ; dernière sortie : None -> CONFORME
+  F, β = 0.22
+      ordre supérieur : occupation initiale = False ; entrées : t = 7.3603 (IED = z_cible) ; sorties : aucune
+      moteur          : occupation initiale = False ; entrées : 1 (première : 7.4) ; dernière sortie : None -> CONFORME
+  A (occupation initiale, puis sortie)
+      ordre supérieur : occupation initiale = True ; entrées : aucune ; sorties : t = 0.3581 (M = m_hi)
+      moteur          : occupation initiale = True ; entrées : 0 (première : None) ; dernière sortie : 0.4 -> CONFORME
+  contrôle : F, β = 0,16, m_hi = 1,15 (entrée puis sortie)
+      ordre supérieur : occupation initiale = False ; entrées : t = 26.6449 (IED = z_cible) ; sorties : t = 31.2958 (M = m_hi)
+      moteur          : occupation initiale = False ; entrées : 1 (première : 26.65) ; dernière sortie : 31.3 -> CONFORME
+   Les deux derniers cas vérifient que le contrôle détecte une sortie par la fenêtre monétaire ;
+   le dernier est une configuration de test, hors des scénarios publiés.
+
+Environnement : Python 3.12.3 ; numpy 2.5.4 ; scipy 1.18.1
+BILAN : tous les contrôles sont CONFORMES

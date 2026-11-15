@@ -1,0 +1,29 @@
+Exécution du moteur : code de retour 0
+[IDENTIQUE] csv/T10_certificat_B.csv
+[IDENTIQUE] csv/T1_robustesse.csv
+[IDENTIQUE] csv/T2_monetaire.csv
+[IDENTIQUE] csv/T3_points_fixes.csv
+[IDENTIQUE] csv/T4_C31_statique.csv
+[IDENTIQUE] csv/T5_C31_dynamique.csv
+[IDENTIQUE] csv/T6_delai_tau.csv
+[IDENTIQUE] csv/T7_beta_grid.csv
+[IDENTIQUE] csv/T8_quatre_registres.csv
+[IDENTIQUE] csv/T9_admissibilite_PF1.csv
+[IDENTIQUE] execution.log
+[IDENTIQUE] figures/figure_01_architecture_programme.pdf
+[IDENTIQUE] figures/figure_01_architecture_programme.png
+[IDENTIQUE] figures/figure_02_architecture_triangulaire.pdf
+[IDENTIQUE] figures/figure_02_architecture_triangulaire.png
+[IDENTIQUE] figures/figure_03_geometrie_K_Zcible.pdf
+[IDENTIQUE] figures/figure_03_geometrie_K_Zcible.png
+[IDENTIQUE] figures/figure_04_C31_statique.pdf
+[IDENTIQUE] figures/figure_04_C31_statique.png
+[IDENTIQUE] figures/figure_05_trajectoires_IED.pdf
+[IDENTIQUE] figures/figure_05_trajectoires_IED.png
+[IDENTIQUE] figures/figure_06_portraits_IED_M.pdf
+[IDENTIQUE] figures/figure_06_portraits_IED_M.png
+[IDENTIQUE] figures/figure_S1_delai_tau.pdf
+[IDENTIQUE] figures/figure_S1_delai_tau.png
+[IDENTIQUE] figures/figure_S2_beta_Zcible.pdf
+[IDENTIQUE] figures/figure_S2_beta_Zcible.png
+BILAN : dix CSV et journal identiques octet pour octet

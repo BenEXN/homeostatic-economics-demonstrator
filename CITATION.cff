@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+message: "If you use this software or its outputs, please cite the article it accompanies."
+title: "Reproducible package of the Homeostatic Economics numerical demonstrator"
+version: "V1.1"
+type: software
+authors:
+  - family-names: "Albouy"
+    given-names: "Benjamin"
+    orcid: "https://orcid.org/0009-0009-4871-9608"
+license:
+  - MIT
+  - CC-BY-4.0
+url: "https://vteh.eu/research/records/reproducible-engine-v1.html"
+keywords:
+  - viability theory
+  - coupled dynamical system
+  - biophysical constraint
+  - monetary feedback
+  - reproducibility
+preferred-citation:
+  type: article
+  title: "Mise en calcul d'une architecture biophysique–monétaire sous contraintes : un démonstrateur numérique exploratoire"
+  authors:
+    - family-names: "Albouy"
+      given-names: "Benjamin"
+      orcid: "https://orcid.org/0009-0009-4871-9608"
+  year: 2026
+  month: 11
+  languages:
+    - fr
+  notes: "Version V1.1. English translation: Computational instantiation of a constrained biophysical–monetary architecture: an exploratory numerical demonstrator, https://vteh.eu/assets/documents/EH-Demonstrator-Article-V1.1-EN.pdf"
+  url: "https://vteh.fr/assets/documents/EH-Article-demonstrateur-V1.1.pdf"
