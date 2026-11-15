@@ -10,7 +10,8 @@ authors:
 license:
   - MIT
   - CC-BY-4.0
-url: "https://vteh.eu/research/records/reproducible-engine-v1.html"
+url: repository-code: "https://github.com/BenEXN/homeostatic-economics-demonstrator"
+"https://vteh.eu/research/records/reproducible-engine-v1.html"
 keywords:
   - viability theory
   - coupled dynamical system
